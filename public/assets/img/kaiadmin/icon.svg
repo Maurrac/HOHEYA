@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <style>
+      .h-style {
+        fill: #6a0cf8; /* Couleur principale */
+      }
+    </style>
+  </defs>
+  <g>
+    <!-- Barre gauche -->
+    <rect x="50" y="30" width="20" height="140" class="h-style"/>
+    <!-- Barre centrale -->
+    <rect x="70" y="90" width="60" height="20" class="h-style"/>
+    <!-- Barre droite -->
+    <rect x="130" y="30" width="20" height="140" class="h-style"/>
+  </g>
+</svg>

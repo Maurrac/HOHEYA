@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200">
+  <defs>
+    <style>
+      .logo-text {
+        font-family: Arial, sans-serif;
+        font-size: 180px; /* Taille augmentée */
+        font-weight: bold;
+        fill: #6a0cf8; /* Couleur du texte */
+      }
+    </style>
+  </defs>
+  <g>
+    <!-- Rectangle de fond -->
+    <rect x="0" y="0" width="800" height="200" fill="none" />
+    <!-- Texte du logo -->
+    <text x="50" y="140" class="logo-text">HOHEYA</text>
+  </g>
+</svg>
