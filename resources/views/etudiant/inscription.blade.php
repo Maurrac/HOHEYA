@@ -228,7 +228,7 @@
                                     <!-- password-confirm input -->
                                     <div class="input-group">
                                         <input type="password" id="reg_userpasswordconfirm" class="form-control"
-                                            data-placement="bottom" name="confirm_password" data-toggle="popover"
+                                            data-placement="bottom" name="password_confirmation" data-toggle="popover"
                                             data-container="body" data-html="true"
                                             placeholder="Confirmer mot de passe" required>
 

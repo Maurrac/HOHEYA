@@ -37,7 +37,7 @@ Route::get('proprietaire/dashboard', function () {
     return view('proprietaire.index');
 })->name('proprietaire.dashboard');
 
-Route::get('/dashboard', function () {
+Route::get('/dashboard', function    () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -46,10 +46,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::post('/annonces', [AnnonceController::class, 'store']); // Créer une annonce
-    Route::get('/annonces/{id}/demandes', [AnnonceController::class, 'showDemandes']); // Voir les 
-    
-    Route::post('/annonces/{id}/demandes', [DemandeController::class, 'store']); // Faire une demande
+    Route::prefix('proprietaire')->group(function () {
+        Route::get('/annonces', [AnnonceController::class, 'index'])->name('annonces.index');
+        Route::get('/annonces/create', [AnnonceController::class, 'create'])->name('annonces.create'); 
+        Route::post('/annonces/save', [AnnonceController::class, 'store'])->name('annonces.store');
+        Route::get('/annonces/{id}/demandes', [AnnonceController::class, 'edit'])->name('annonces.edit');
+        // Route::post('/annonces/{id}/demandes', [DemandeController::class, 'store']); 
+        Route::get('/annonces/{id}/demandes/show', [AnnonceController::class, 'showDemandes'])->name('annonces.demandes');
+    });
 
 });
 

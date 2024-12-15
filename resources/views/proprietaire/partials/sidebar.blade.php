@@ -36,7 +36,7 @@
                     <h4 class="text-section">Components</h4>
                 </li>
                 <li class="nav-item">
-                    <a  href="">
+                    <a  href="{{route('annonces.index')}}">
                         <i class="fas fa-layer-group"></i>
                         <p>Annonces</p>
                     </a>

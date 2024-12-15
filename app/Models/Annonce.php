@@ -13,7 +13,8 @@ class Annonce extends Model
         'localisation',
         'prix',
         'type',
-        'status'
+        'status',
+        'files'
     ];
 
     public function proprietaire()

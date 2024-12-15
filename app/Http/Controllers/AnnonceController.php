@@ -13,7 +13,10 @@ class AnnonceController extends Controller
      */
     public function index()
     {
-        //
+        // Fetch all announcements with pagination
+        $annonces = Annonce::latest()->paginate(10);
+
+        return view('proprietaire.annonces', compact('annonces'));
     }
 
     /**
@@ -21,7 +24,8 @@ class AnnonceController extends Controller
      */
     public function create()
     {
-        //
+        $view = Auth::user()->user_type == "etudiant" ? "etudiant.create-annonce" : "proprietaire.create-annonce";
+        return view($view);
     }
 
     /**
@@ -29,38 +33,46 @@ class AnnonceController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'titre' => 'required|string|max:255',
-            'description' => 'required|string',
-            'localisation' => 'required|string',
-            'prix' => 'required|integer',
-            'type' => 'required|in:logement,colocation',
-        ]);
+        // dd($request->all());
+        try {
+            $request->validate([
+                'titre' => 'required|string|max:255',
+                'description' => 'required|string',
+                'localisation' => 'required|string',
+                'prix' => 'required|integer',
+                'type' => 'required|in:logement,colocation',
+                'files.*' => 'nullable'
+            ]);
 
-        $annonce = Annonce::create([
-            'proprietaire_id' => Auth::id(),
-            'titre' => $request->titre,
-            'description' => $request->description,
-            'localisation' => $request->localisation,
-            'prix' => $request->prix,
-            'type' => $request->type,
-        ]);
+            // Handle file uploads
+            $uploadedFiles = [];
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $file) {
+                    $uploadedFiles[] = $file->store('annonces', 'public');
+                }
+            }
 
-        return response()->json([
-            'message' => 'Annonce créée avec succès.',
-            'annonce' => $annonce,
-        ], 201);
+            Annonce::create([
+                'proprietaire_id' => Auth::id(),
+                'titre' => $request->titre,
+                'description' => $request->description,
+                'localisation' => $request->localisation,
+                'prix' => $request->prix,
+                'type' => $request->type,
+                'files' => $uploadedFiles ? json_encode($uploadedFiles) : null,
+            ]);
+            return redirect()->back()->with('success', 'Annonce creéée avec succès');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', "Echec lors de la création de l'annone: " . $e->getMessage());
+        }
+
     }
 
     public function showDemandes($id)
     {
         $annonce = Annonce::with('demandes')->findOrFail($id);
-
-        if ($annonce->proprietaire_id !== Auth::id()) {
-            return response()->json(['message' => 'Accès interdit.'], 403);
-        }
-
-        return response()->json($annonce->demandes);
+        // dd($annonce);
+        return view('proprietaire.demandes', compact('annonce'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -83,6 +95,6 @@ class AnnonceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        
     }
 }
