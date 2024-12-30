@@ -82,11 +82,17 @@ class ClientAuthController extends Controller
                 'password' => 'required',
                 'user_type' => 'required|in:proprietaire'
             ]);
+
+
     
             // Vérifier les identifiants
             $credentials = $request->only('email', 'password');
     
             if (Auth::attempt($credentials)) {
+                if (Auth::user()->user_type != 'proprietaire') {
+                    Auth::logout();
+                    return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à accéder à cette page');
+                }
                 $request->session()->regenerate(); 
     
                 return redirect(route('proprietaire.dashboard'));
@@ -111,6 +117,10 @@ class ClientAuthController extends Controller
             $credentials = $request->only('email', 'password');
     
             if (Auth::attempt($credentials)) {
+                if (Auth::user()->user_type != 'etudiant') {
+                    Auth::logout();
+                    return redirect()->back()->with('error', 'Vous n\'êtes pas un étudiant');
+                }
                 $request->session()->regenerate(); 
     
                 return redirect(route('etudiant.dashboard'));

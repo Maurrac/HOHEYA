@@ -15,17 +15,18 @@ class AnnonceController extends Controller
         $annonces = Annonce::when($search, function ($query, $search) {
             return $query->where('titre', 'like', "%{$search}%")
                         ->orWhere('localisation', 'like', "%{$search}%");
-        })->latest()->paginate(10);
+        })->where('status', 'verified')->latest()->paginate(10);
 
         return view('annonces.index', compact('annonces'));
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         // Fetch all announcements with pagination
-        $annonces = Annonce::latest()->paginate(10);
+        $annonces = Annonce::where('proprietaire_id', Auth::id())->paginate(10);
 
         return view('proprietaire.annonces', compact('annonces'));
     }
@@ -52,7 +53,7 @@ class AnnonceController extends Controller
                 'localisation' => 'required|string',
                 'prix' => 'required|integer',
                 'type' => 'required|in:logement,colocation',
-                'files.*' => 'mimes:jpg,jpeg,png,pdf'
+                'files.*' => 'mimes:jpg,jpeg,png |max:2048',
             ]);
 
             // Handle file uploads
@@ -82,7 +83,6 @@ class AnnonceController extends Controller
     public function showDemandes($id)
     {
         $annonce = Annonce::with('demandes')->findOrFail($id);
-        // dd($annonce);
         return view('proprietaire.demandes', compact('annonce'));
     }
     /**

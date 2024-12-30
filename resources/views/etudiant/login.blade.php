@@ -135,7 +135,7 @@
                                 <p>Rejoignez-nous dès aujourd'hui pour accéder à nos services exclusifs ! Gagnez du
                                     temps dans la gestion de vos biens, améliorez vos processus et profitez d'une
                                     assistance sur mesure.</p>
-                                <a href="{{ route('proprietaire.inscription') }}"
+                                <a href="{{ route('etudiant.inscription') }}"
                                     class="btn btn-primary active mt-3">Créer un compte maintenant !</a>
 
                             </div>

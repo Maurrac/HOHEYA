@@ -19,7 +19,7 @@ class DemandeController extends Controller
 
     public function getAnnonces()
     {
-        $annonces = Annonce::paginate(10);
+        $annonces = Annonce::where('status', 'verified')->paginate(10);
         return view("etudiant.annonces", compact("annonces"));
     }
 
