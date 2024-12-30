@@ -50,7 +50,7 @@
                             required>
                             <option value="">Sélectionnez</option>
                             <option value="logement" {{ old('type') == 'logement' ? 'selected' : '' }}>Logement</option>
-                            <option value="colocation" {{ old('type') == 'colocation' ? 'selected' : '' }}>Colocation
+                            {{-- <option value="colocation" {{ old('type') == 'colocation' ? 'selected' : '' }}>Colocation --}}
                             </option>
                         </select>
                         @error('type')
@@ -58,7 +58,7 @@
                         @enderror
                     </div>
                     <div class="col-md-12 form-group ">
-                        <label for="files" class="form-label">Fichiers (Images ou PDF)</label>
+                        <label for="files" class="form-label">Images</label>
                         <input type="file" name="files[]" class="form-control" multiple>
                         @error('files.*')
                             <small class="text-danger">{{ $message }}</small>

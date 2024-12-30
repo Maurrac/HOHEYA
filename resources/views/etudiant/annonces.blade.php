@@ -4,7 +4,7 @@
     <div class="container py-5">
         <div class="row text-center text-dark mb-5">
             <div class="col-lg-7 mx-auto">
-                <h1 class="display-4">Product List</h1>
+                <h1 class="display-4">Annonces</h1>
             </div>
         </div>
         <div class="row">
@@ -23,7 +23,7 @@
                                             {{ $annonce->description }}</p>
                                         <div class="d-flex align-items-center justify-content-between mt-1">
                                             <h6 class="font-weight-bold my-2">{{ $annonce->prix }} FCFA</h6>
-                                            <ul class="list-inline small">
+                                            {{-- <ul class="list-inline small">
                                                 <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>
                                                 </li>
                                                 <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>
@@ -33,7 +33,7 @@
                                                 <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>
                                                 </li>
                                                 <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>
-                                            </ul>
+                                            </ul> --}}
                                             <span
                                                 class="{{ $annonce->status == 'verified' ? 'text-success' : 'text-danger' }}">
                                                 {{ $annonce->status }}</span>
@@ -42,12 +42,17 @@
                                     @php
                                         $files = json_decode($annonce->files);
                                     @endphp
-                                    @foreach ($files as $file)
-                                        @if ($file && @getimagesize(storage_path('app/public/' . $file)))
-                                            <img src="{{ asset('storage/' . $file) }}" alt="Generic placeholder image"
-                                                width="200" class="ml-lg-5 order-1 order-lg-2">
-                                        @endif
-                                    @endforeach
+                                    <div class="row d-flex align-items-center justify-content-between mx-auto">
+                                        @foreach ($files as $file)
+                                            <div class="col-md-3">
+                                                @if ($file && @getimagesize(storage_path('app/public/' . $file)))
+                                                    <img src="{{ asset('storage/' . $file) }}"
+                                                        alt="Generic placeholder image" width="200px" height="300px"
+                                                        class="ml-lg-5 order-1 order-lg-2">
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
 
                                 </div> <!-- End -->
                             </a>

@@ -53,7 +53,7 @@ class AnnonceController extends Controller
                 'localisation' => 'required|string',
                 'prix' => 'required|integer',
                 'type' => 'required|in:logement,colocation',
-                'files.*' => 'mimes:jpg,jpeg,png |max:2048',
+                'files.*' => 'mimes:jpg,jpeg,png|max:2048',
             ]);
 
             // Handle file uploads

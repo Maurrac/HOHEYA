@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Annonce;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -94,5 +95,6 @@ Route::post('/proprietaire/login', [ClientAuthController::class, 'loginProprieta
 Route::post('/etudiant/login', [ClientAuthController::class, 'loginEtudiant'])->name('etudiant.login');
 
 Route::get('search', function () {
-    return view('search');
+    $annonces = Annonce::where('status', 'verified')->paginate(10);
+    return view('search', compact('annonces'));
 })->name('search');;
