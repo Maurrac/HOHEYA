@@ -17,12 +17,18 @@ class DemandeController extends Controller
         //
     }
 
+    public function getAnnonces()
+    {
+        $annonces = Annonce::paginate(10);
+        return view("etudiant.annonces", compact("annonces"));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        return view('etudiant.create-demande');   
     }
 
     /**
@@ -31,10 +37,6 @@ class DemandeController extends Controller
     public function store(Request $request, $annonceId)
     {
         $annonce = Annonce::findOrFail($annonceId);
-
-        if ($annonce->proprietaire_id === Auth::id()) {
-            return response()->json(['message' => 'Vous ne pouvez pas postuler à votre propre annonce.'], 403);
-        }
 
         $request->validate([
             'message' => 'nullable|string',

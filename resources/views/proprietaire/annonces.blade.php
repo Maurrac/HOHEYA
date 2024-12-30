@@ -43,7 +43,7 @@
                             <td>{{ $annonce->prix }} FCFA</td>
                             <td>{{ ucfirst($annonce->type) }}</td>
                             <td>{{ $annonce->created_at->format('d/m/Y') }}</td>
-                            <td class="d-flex justify-content-around">
+                            <td class="d-flex justify-content-around m-auto">
                                 @if (Auth::user()->id === $annonce->proprietaire_id)
                                 <a href="{{ route('annonces.demandes', $annonce->id) }}" class="btn btn-info btn-sm">Voir demandes</a>
                                     <a href="{{ route('annonces.edit', $annonce->id) }}"

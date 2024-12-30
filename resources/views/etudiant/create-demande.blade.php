@@ -1,4 +1,4 @@
-@extends('proprietaire.layout.app')
+@extends('etudiant.layout.app')
 
 @section('content')
     <div class="container">
@@ -14,13 +14,13 @@
         @endif
         <div class="container-fluid">
 
-            <h1>Créer une annonce</h1>
+            <h1>Créer une demande</h1>
 
-            <form action="{{ route('annonces.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('demandes.store') }}" method="POST">
                 @csrf
                 <div class="row m-auto">
                     <div class="col-md-6 form-group ">
-                        <label for="titre" class="form-label">Titre de l'annonce</label>
+                        <label for="titre" class="form-label">Titre de l'demande</label>
                         <input type="text" name="titre" class="form-control @error('titre') is-invalid @enderror"
                             id="titre" value="{{ old('titre') }}" required>
                         @error('titre')

@@ -80,6 +80,7 @@ class ClientAuthController extends Controller
             $request->validate([
                 'email' => 'required|email',
                 'password' => 'required',
+                'user_type' => 'required|in:proprietaire'
             ]);
     
             // Vérifier les identifiants
@@ -103,6 +104,7 @@ class ClientAuthController extends Controller
             $request->validate([
                 'email' => 'required|email',
                 'password' => 'required',
+                'user_type' => 'required|in:etudiant'
             ]);
     
             // Vérifier les identifiants

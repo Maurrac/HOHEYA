@@ -107,6 +107,7 @@
                                 @csrf
                                 <h1>Connexion</h1>
                                 <p class="text-muted">Connectez-vous à votre compte</p>
+                                <input type="text" name="user_type" value="etudiant" hidden>
                                 <div class="input-group mb-3">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                     <input name="email" type="email" class="form-control" placeholder="Email">

@@ -8,6 +8,17 @@ use Illuminate\Support\Facades\Auth;
 
 class AnnonceController extends Controller
 {
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $annonces = Annonce::when($search, function ($query, $search) {
+            return $query->where('titre', 'like', "%{$search}%")
+                        ->orWhere('localisation', 'like', "%{$search}%");
+        })->latest()->paginate(10);
+
+        return view('annonces.index', compact('annonces'));
+    }
     /**
      * Display a listing of the resource.
      */
@@ -41,7 +52,7 @@ class AnnonceController extends Controller
                 'localisation' => 'required|string',
                 'prix' => 'required|integer',
                 'type' => 'required|in:logement,colocation',
-                'files.*' => 'nullable'
+                'files.*' => 'mimes:jpg,jpeg,png,pdf'
             ]);
 
             // Handle file uploads

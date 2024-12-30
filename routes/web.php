@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\DemandeController;
 use App\Http\Controllers\ProfileController;
@@ -38,7 +40,13 @@ Route::get('proprietaire/dashboard', function () {
 })->name('proprietaire.dashboard');
 
 Route::get('/dashboard', function    () {
-    return view('dashboard');
+    if (Auth::user()->user_type == 'admin') {
+        return redirect()->route('admin.dashboard');
+    } elseif (Auth::user()->user_type == 'etudiant') {
+        return redirect()->route('etudiant.dashboard');
+    } elseif (Auth::user()->user_type == 'proprietaire') {
+        return redirect()->route('proprietaire.dashboard');
+    }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -55,6 +63,22 @@ Route::middleware('auth')->group(function () {
         Route::get('/annonces/{id}/demandes/show', [AnnonceController::class, 'showDemandes'])->name('annonces.demandes');
     });
 
+    Route::prefix('etudiant')->group(function () {
+        Route::get('/get-annonces', [DemandeController::class, 'getAnnonces'])->name('demandes.get-annonces');
+        Route::get('/demandes', [DemandeController::class, 'index'])->name('demandes.index');
+        Route::get('/demandes/create', [DemandeController::class, 'create'])->name('demandes.create');
+        Route::post('/demandes/save', [DemandeController::class, 'store'])->name('demandes.store');
+    });
+
+    Route::prefix('admin')->group(function () {
+        Route::get('/proprietaires', [AdminController::class, 'proprietaire'])->name('admin.proprietaires');
+        Route::get('/proprietaires/{proprietaire}/show', [AdminController::class, 'showProprietaire'])->name('admin.proprietaires.show');
+        Route::get('/etudiants', [AdminController::class, 'etudiant'])->name('admin.etudiants');
+        Route::get('/etudiants/{etudiant}/show', [AdminController::class, 'showEtudiant'])->name('admin.etudiants.show');
+        Route::get('/annonces/{annonce}/validate', [AdminController::class, 'validateAnnonce'])->name('admin.validate.annonce');
+        Route::get('/users/{user}/activateOrDeactivate', [AdminController::class, 'activateOrDeactivateUser'])->name('admin.activateOrDeactivate.user');
+        Route::get('/annonce/{annonce}verify', [AdminController::class, 'validateAnnonce'])->name('admin.annonce.verify');
+    });
 });
 
 require __DIR__.'/auth.php';
